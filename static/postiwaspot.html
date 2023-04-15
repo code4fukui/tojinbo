@@ -8,30 +8,45 @@
 </head>
 <body>
   <h1>投稿</h1>
-  <form action=receive.php method=post>
+  <form id="form">
     <dl>
       <dt>写真を選択</dt>
        <label for="upload">写真を撮影してアップロードする</label>
        <input id="upload" type="file" mame="image" accept="image/*" capture="camera"> 
       <dt>ニックネーム</dt>
       <dd>
-       <input type=text name="your_name">
+       <input type=text id="your_name">
       </dd>
       <dt>何の形に見える？</dt>
       <dd>
-        <input type=text name="what_looks_like">
+        <input type=text id="what_looks_like">
       </dd>
       <dt>性別</dt>
       <dd>
         <ul>
-         <li><input type=radio name=gender value=男>男性</li>
-         <li><input type=radio name=gender valur=女>女性</li>
+         <li><input type=radio name=gender id=genderm >男性</li>
+         <li><input type=radio name=gender id=genderf >女性</li>
         </ul>  
       </dd>
     </dl>
     <p><input type=submit value=投稿する></p>
   </form>
 
+  <script type="module">
+    import {fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
+
+    form.onsubmit = async (e)=> {
+      e.preventDefault()
+      const param = {
+        nickname: your_name.value,
+        comment: what_looks_like.value,
+        genderm: genderm.checked,
+        genderf: genderf.checked,
+      }
+      await fetchJSON("/api/save", param)
+      alert()
+    }
+  </script>
 </body>
 </html>
 
