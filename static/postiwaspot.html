@@ -30,26 +30,6 @@
       </dd>
     </dl>
     <p><input type=submit value=投稿する></p>
-  </form>
-  <form method="post" action="upload.php" enctype="multipart/form-data">
-    <input type="file" name="photo">
-    <button type="submit">アップロード</button>
-  </form>
-  <?php
-if (isset($_FILES['photo'])) {
-  $upload_dir = 'uploads/';
-  $upload_file = $upload_dir . basename($_FILES['photo']['name']);
-  if (move_uploaded_file($_FILES['photo']['tmp_name'], $upload_file)) {
-    echo '画像をアップロードしました。';
-  } else {
-    echo '画像のアップロードに失敗しました。';
-  }
-}
-?>
-<div class="container">
-  <?php
-  $upload_dir = 'uploads/';
-  $images
 </body>
 </html>
 
