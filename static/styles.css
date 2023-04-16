@@ -33,6 +33,7 @@
     text-align: center;
     line-height: 50px;
     align-items: center;
+    padding: 5px;
   }
   
   .icon-with-text i {
