@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <h1>岩投稿一覧</h1>
+        <main id="main"></main>
+
+        <script type="module">
+            import {fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
+              const param = {
+              }
+
+              const data = await fetchJSON("/api/watch", param)
+              console.log(data)
+              data.forEach(d => {
+                  main.innerHTML += `
+                    <div>
+                        <p>ニックネーム：${d.nickname}</p>
+                        <p>何の形に見える？：${d.comment}</p>
+                        <p>男：${d.genderm}</p>
+                        <p>女：${d.genderf}</p>
+                    </div>
+
+                  `;
+              })
+          </script>
+
+          <style>
+              main div {
+                  border: 2px solid black;
+              }
+          </style>
+</html>
