@@ -22,7 +22,6 @@
 
   .floating-icon {
     position: fixed;
-    flex-direction: column;
     right: 20px;
     bottom: 20px;
     width: 50px;
