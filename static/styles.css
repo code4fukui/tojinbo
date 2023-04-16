@@ -20,8 +20,9 @@
     font-size: 16px;
   }
 
-  .floating-icon {
+  .icon-with-text {
     position: fixed;
+    flex-direction: column;
     right: 20px;
     bottom: 20px;
     width: 50px;
@@ -30,15 +31,17 @@
     border-radius: 50%;
     text-align: center;
     line-height: 50px;
+    align-items: center;
   }
   
-  .floating-icon i {
+  .icon-with-text i {
     color: white;
     font-size: 24px;
+    margin-bottom: 8px;
   }
   
-  .icon-text {
-    margin-left: 10px;
-    font-size: 20px;
+  .icon-with-text span {
+    font-size: 16px;
+    font-weight: bold;
     color: white;
   }
