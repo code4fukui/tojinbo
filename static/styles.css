@@ -20,31 +20,20 @@
     font-size: 16px;
   }
 
-  .icon {
-    position: fixed;  /* ページスクロールに追従するように位置を固定 */
-    bottom: 20px;  /* 下からの距離を設定 */
-    right: 20px;  /* 右からの距離を設定 */
-    z-index: 999;  /* 他の要素よりも手前に表示する */
+  .floating-icon {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
   }
   
-  .icon i {
-    font-size: 30px;  /* アイコンのサイズを設定 */
-    color: black;  /* アイコンの色を設定 */
-    background-color: white;  /* アイコンの背景色を設定 */
-    border-radius: 50%;  /* アイコンを丸くする */
-    padding: 10px;  /* アイコンの内側の余白を設定 */
-  }
-
-  a {
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  i {
-    margin-right: 5px;
-  }
-  
-  .icon {
-    font-size: 30px;
+  .floating-icon i {
+    color: white;
+    font-size: 24px;
   }
   
