@@ -34,3 +34,13 @@
     border-radius: 50%;  /* アイコンを丸くする */
     padding: 10px;  /* アイコンの内側の余白を設定 */
   }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  i {
+    margin-right: 5px;
+  }
+  
