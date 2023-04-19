@@ -1,24 +1,45 @@
-// ページの読み込みが完了したら
-window.onload = function() {
-    // ナビゲーションのアイテムを取得
-    const navItems = document.querySelectorAll('nav ul li a');
+
+// メニューリンクの要素を取得
+const homelink = document.getElementById('homelink');
+const iwaspotlink = document.getElementById('iwaspotlink');
+const maplink = document.getElementById('maplink');
+const gamelink = document.getElementById('gamelink');
+const userlink = document.getElementById('userlink');
+
+// ページ移動時の処理を定義
+function navigateToPage(pageId) {
+  // アクティブ状態のリンクをリセット
+  homelink.classList.remove('active');
+  iwaspotlink.classList.remove('active');
+  maplink.classList.remove('active');
+  gamelink.classList.remove('active');
+  userlink.classList.remove('active');
+
+  // クリックされたリンクをアクティブにする
+  document.getElementById(pageId).classList.add('active');
   
-    // 各アイテムをクリックしたときの処理
-    navItems.forEach(function(item) {
-      item.addEventListener('click', function(event) {
-        // デフォルトのクリックイベントをキャンセル
-        event.preventDefault();
-        
-        // クリックされたアイテムに対応するページに遷移する処理を記述
-        // ここでは、console.log()でメッセージを表示するだけにしています。
-        console.log(`移動先: ${item.getAttribute('href')}`);
-        
-        // ナビゲーションのアイテムのアクティブ状態を切り替える
-        navItems.forEach(function(navItem) {
-          navItem.classList.remove('active');
-        });
-        item.classList.add('active');
-      });
-    });
-  }
-  
+  // ここでページの移動を実行する
+  // 例: window.location.href = '新しいページのURL';
+  console.log(`Navigating to ${pageId} page...`);
+}
+
+// メニューリンクがクリックされた時の処理を定義
+homelink.addEventListener('click', function() {
+  navigateToPage('homelink');
+});
+
+iwaspotlink.addEventListener('click', function() {
+  navigateToPage('iwaspotlink');
+});
+
+maplink.addEventListener('click', function() {
+  navigateToPage('maplink');
+});
+
+gamelink.addEventListener('click', function() {
+    navigateToPage('gamelink');
+});
+
+userlink.addEventListener('click', function() {
+    navigateToPage('userlink');
+});
