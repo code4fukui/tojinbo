@@ -1,3 +1,7 @@
+body {
+    background-color: rgb(139, 255, 255);
+}
+
 nav {
     position: fixed;
     bottom: 0;
