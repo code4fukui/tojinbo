@@ -5,7 +5,7 @@ body {
 nav {
     position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 100%;    
     background-color: white;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
   }
@@ -28,4 +28,11 @@ nav {
     padding: 10px;
     color: #333;
     text-decoration: none;
+  }
+  nav a i {
+    font-size: 20px;
+  }
+  
+  nav a.active {
+    color: black;
   }
