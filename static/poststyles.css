@@ -35,18 +35,18 @@ body {
     background-color: orange;
     border-radius: 50%;
     text-align: center;
-    line-height: 50px;
     align-items: center;
   }
   
   .icon-with-text i {
     color: white;
     font-size: 24px;
-    padding-bottom: -10px;
+    margin-top: 6px;
+    margin-bottom: 0px;
   }
   
   .icon-with-text span {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     color: white;
   }
