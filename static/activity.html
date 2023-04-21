@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>activity</title>
+</head>
+<body>
+    <div id="calendar-container" class="calendar"></div>
+  
+    <script>
+      var selectedDate = null; // 選択された日付
+      var events = {}; // 予定のオブジェクトを格納する連想配列
+      
+      // カレンダーを生成する関数
+      function generateCalendar(year, month) {
+        var container = document.getElementById('calendar-container');
+        container.innerHTML = ''; // カレンダーの中身をクリア
+        
+        var date = new Date(year, month - 1, 1); // 指定された年月の最初の日を取得
+        var lastDay = new Date(year, month, 0).getDate(); // 指定された年月の最後の日を取得
+        
+        // カレンダーのヘッダを生成
+        var table = document.createElement('table');
+        var thead = document.createElement('thead');
+        var tr = document.createElement('tr');
+        var th = null;
+        var weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+        for (var i = 0; i < weekdays.length; i++) {
+          th = document.createElement('th');
+          th.textContent = weekdays[i];
+          tr.appendChild(th);
+        }
+        thead.appendChild(tr);
+        table.appendChild(thead);
+        
+        // カレンダーの日付部分を生成
+        var tbody = document.createElement('tbody');
+        tr = document.createElement('tr');
+        var td = null;
+        for (var i = 1; i <= lastDay; i++) {
+          if (date.getDay() === 0 && i !== 1) { // 日曜日の場合は新しい行を追加
+            tbody.appendChild(tr);
+            tr = document.createElement('tr');
+          }
+          td = document.createElement('td');
+          td.textContent = i;
+          td.addEventListener('click', function(event) {
+            // クリックされた日付を選択状態にする
+            var selectedDay = event.target.textContent;
+            var selectedMonth = month;
+            var selectedYear = year;
+            if (selectedDate) {
+              selectedDate.classList.remove('selected');
+            }
+          selectedDate = event.target;
+          selectedDate.classList.add('selected');
+          
+          // 予定の入力フォームを表示
+          var eventInput = document.querySelector('.event-input');
+          eventInput.style.display = 'block';
+          eventInput.querySelector('input[type="text"]').focus();
+          
+          // 予定を追加するボタンがクリックされた場合の処理
+          eventInput.querySelector('button').addEventListener('click', function() {
+            var eventName = eventInput.querySelector('input[type="text"]').value;
+            if (eventName) {
+              // 予定を連想配列に追加
+              events[selectedYear] = events[selectedYear] || {};
+              events[selectedYear][selectedMonth] = events[selectedYear][selectedMonth] || {};
+              events[selectedYear][selectedMonth][selectedDay] = eventName;
+              
+              // 予定の入力フォームを非表示にする
+              eventInput.style.display = 'none';
+              
+              // 予定の内容を表示
+              var eventInfo = document.createElement('p');
+              eventInfo.textContent = selectedYear + '年' + selectedMonth + '月' + selectedDay + '日: ' + eventName;
+              eventInput.parentNode.appendChild(eventInfo);
+            }
+          });
+        });
+        tr.appendChild(td);
+        date.setDate(date.getDate() + 1); // 次の日に進める
+      }
+      tbody.appendChild(tr);
+      table.appendChild(tbody);
+      
+      container.appendChild(table);
+      
+      // 予定の入力フォームを生成
+      var eventInput = document.createElement('div');
+      eventInput.className = 'event-input';
+      eventInput.innerHTML = '<input type="text" placeholder="予定を入力してください"><button>追加</button>';
+      container.appendChild(eventInput);
+    }
+    
+    // 初期のカレンダーを生成
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear();
+    var currentMonth = currentDate.getMonth() + 1;
+    generateCalendar(currentYear, currentMonth);
+  </script>
+</body>
+</html>
