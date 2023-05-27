@@ -8,13 +8,14 @@
   <title>postiwaspot</title>
 </head>
 <body>
+  <script type="module" src="https://code4fukui.github.io/input-img/input-img.js"></script>
   <h1 style="text-align: center; color:blue; border-bottom: solid 2px black;">投稿</h1>
   <form id="form">
+  <input-img id="img"></input-img>
     <dl>
       <dt>写真を選択</dt>
        <label for="upload">写真を撮影してアップロードする</label>
-       <input id="upload" type="file" mame="image" accept="image/*" capture="camera"> 
-      <dt>ニックネーム</dt>
+       <dt>ニックネーム</dt>
       <dd>
        <input type=text id="your_name">
       </dd>
@@ -43,6 +44,7 @@
         comment: what_looks_like.value,
         genderm: genderm.checked,
         genderf: genderf.checked,
+        img: img.value,
       }
       await fetchJSON("/api/save", param)
       alert()

@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <script src="iwaspot.js"></script>
-  <script src="common.js"></script>
 </head>
 <body>
 <h1 style="color: gray; border-bottom: solid 2px black; text-align: center; font-size: 22px;">岩スポット！</h1> 
@@ -28,19 +27,19 @@
    <span>投稿</span>
   </div>
 </a>
-<div class="container">
-  <div class="image">
-    <img src="iwanwan.png" onclick="showImage(this.src)"  alt="iwanwan">
-  </div>
-  <div class="image">
-    <img src="iwanwan.png" onclick="showImage(this.src)" alt="iwanwan">
-  </div>
-  <div class="image">
-    <img src="iwanwan.png" onclick="showImage(this.src)" alt="iwanwan">
-  </div>
-  <div class="image">
-    <img src="iwanwan.png" onclick="showImage(this.src)" alt="iwanwan">
-  </div>
+<script type="module">
+  import { Base64 } from "https://js.sabae.cc/Base64.js";
+  const data=await (await fetch("/api/watch")).json();
+
+  console.log(data)
+  for (let i=0; i<data.length; i++){
+    const img=data[i].img
+    const nickname=data[i].nickname
+  container.innerHTML+=`<img src="data:image/png;base64,${img}">
+  ${nickname}`
+  }
+</script>
+<div class="container" id="container">
 </div>    
 <div>
   <nav>  
