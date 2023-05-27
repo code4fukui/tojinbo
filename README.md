@@ -4,6 +4,7 @@ https://code4fukui.github.io/tojinbo/static/
 
 ## memorize sever
 
+```protocol
 岩データの保存
     /api/save
     param:岩データ
@@ -14,3 +15,10 @@ https://code4fukui.github.io/tojinbo/static/
 岩データとは
     東尋坊の岩の写真image
     名前name
+```
+
+## server
+
+```sh
+deno run -A server.js
+```
