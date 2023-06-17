@@ -4,22 +4,23 @@ body {
   }
   
   .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
     }
   .container img {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-content: space-between;
-      flex: 0 0 calc(33.33% - 10px);
-      margin-bottom: 10px;
-      width: 100%;
-      height: auto;
-      object-fit: cover;
+    position: relative;
+    width: 100%;
   }
-  
+  .container .nickname{
+    background-color: white;
+  }
+  .container .comment{
+    background-color: white;
+  }
+  .container .comment{
+    background-color: white;
+  }
     .image {
       width: 30%;
       margin-bottom: 20px;

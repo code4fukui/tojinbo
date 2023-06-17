@@ -29,14 +29,17 @@
 </a>
 <script type="module">
   import { Base64 } from "https://js.sabae.cc/Base64.js";
-  const data=await (await fetch("/api/watch")).json();
+  //const data=await (await fetch("/api/watch")).json();
+  const data=await (await fetch("https://iwapp.code4fukui.org/api/watch")).json();
 
   console.log(data)
   for (let i=0; i<data.length; i++){
     const img=data[i].img
     const nickname=data[i].nickname
-  container.innerHTML+=`<img src="data:image/png;base64,${img}">
-  ${nickname}`
+    const comment=data[i].comment
+    const gender=data[i].gender
+  container.innerHTML+=`<div><img src="data:image/png;base64,${img}">
+  <div class="nickname">${nickname}</div><div class="comment">${comment}</div><div class="gender">${gender}</div></div>`
   }
 </script>
 <div class="container" id="container">
