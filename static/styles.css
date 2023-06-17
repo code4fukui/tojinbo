@@ -8,6 +8,17 @@ body {
       flex-wrap: wrap;
       justify-content: space-between;
     }
+  .container img {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-content: space-between;
+      flex: 0 0 calc(33.33% - 10px);
+      margin-bottom: 10px;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+  }
   
     .image {
       width: 30%;
