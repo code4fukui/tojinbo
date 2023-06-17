@@ -49,6 +49,7 @@ body {
       border-radius: 50%;
       text-align: center;
       align-items: center;
+      z-index: 30;
     }
     
     .icon-with-text i {
