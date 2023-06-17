@@ -1,21 +1,21 @@
 <!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
-<title>AIチャット</title>
+<title>いわんわんチャット</title>
 </head><body>
 
 <div id=body>
 
-<h1>いわにゃんチャット</h1>
+<h1>いわんわんチャット</h1>
 <div id=view></div>
 
 </div>
 
 <div id=bottom>
 <form id=form>
-<input type=text id=q placeholder="いわにゃんへに聞いてみよう" maxlength=140 autocomplete="off">
+<input type=text id=q placeholder="いわんわんに聞いてみよう" maxlength=140 autocomplete="off">
 <input type=submit value="送信"><br>
 <!--<button id=btncls>クリア</button>-->
 </form>
-<a href=https://github.com/code4fukui/ai_chat/>src on GitHub</a> by <a href=https://openai.com/api/>OpenAI API</a><br>
+<a href=https://iwapp.code4fukui.org/>iwapp(開発中)</a> powered by <a href=https://openai.com/api/>OpenAI API</a><br>
 </div>
 
 
@@ -25,9 +25,9 @@ import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
 import { sleep } from "https://js.sabae.cc/sleep.js";
 
 
-const systemcontent=`東尋坊を案内する猫のキャラクター
-名前は「いわにゃん」
-語尾は「にゃん」
+const systemcontent=`東尋坊を案内する犬のキャラクター
+名前は「いわんわん」
+語尾は「わん」
 好きな食べ物は「ソースカツ丼」
 短く回答
 知らないことは知らないと回答
