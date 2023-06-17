@@ -11,7 +11,7 @@
 
 <div id=bottom>
 <form id=form>
-<input type=text id=q placeholder="いわにゃんへに聞いてみよう" autocomplete="off">
+<input type=text id=q placeholder="いわにゃんへに聞いてみよう" maxlength=140 autocomplete="off">
 <input type=submit value="送信"><br>
 <!--<button id=btncls>クリア</button>-->
 </form>
@@ -49,8 +49,14 @@ const systemcontent=`東尋坊を案内する猫のキャラクター
 
 */
 
+const maxqlen = 140;
+const maxqn = 5;
+
 form.onsubmit = async (e) => {
   e.preventDefault();
+  if (q.value.length > maxqlen) {
+    q.value = q.value.substring(0, maxqlen);
+  }
   const prompt = q.value;
   if (!prompt) {
     return;
@@ -65,7 +71,9 @@ form.onsubmit = async (e) => {
 
   const messages = [];
   let user = true;
-  for (const div of view.children) {
+  for (let i = Math.max(view.children.length - maxqn + 1, 0); i < view.children.length; i++) {
+    const div = view.children[i];
+  //for (const div of view.children) {
     const content = div.textContent;
     if (user) {
       if (content.startsWith("ところで")) {
