@@ -30,6 +30,7 @@ deno run -A server.js
 #### 公開鍵、秘密鍵をまだ生成していない場合は生成する(Macの場合)
 
 ```sh
+mkdir ~/.ssh
 ssh-keygen -t ed25519
 cat ~/.ssh/id_ed25519.pub
 ls ~/.ssh/id_ed25519
