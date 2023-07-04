@@ -52,7 +52,7 @@ echo "ssh-ed25519 ?? ??@??" >> ~/.ssh/authorized_keys
 ### ログイン
 
 ```sh
-ssh -i ~/..sh/id_ed25519 iwapp@iwapp.code4fukui.org
+ssh -i ~/.ssh/id_ed25519 iwapp@iwapp.code4fukui.org
 cd tojinbo
 ```
 
