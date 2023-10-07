@@ -1,36 +1,62 @@
 <!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
-<title>AIチャット</title>
+<title>いわんわんチャット</title>
 </head><body>
 
 <div id=body>
 
-<h1>わんにゃんチャット</h1>
-<form id=form>
+<h1>いわんわんチャット</h1>
 <div id=view></div>
 
 </div>
 
 <div id=bottom>
-<input type=text id=q placeholder="AIへの会話をここに書きます" autocomplete="off">
+<form id=form>
+<input type=text id=q placeholder="いわんわんに聞いてみよう" maxlength=140 autocomplete="off">
 <input type=submit value="送信"><br>
 <!--<button id=btncls>クリア</button>-->
 </form>
-<a href=https://github.com/code4fukui/ai_chat/>src on GitHub</a> by <a href=https://openai.com/api/>OpenAI API</a><br>
+<a href=https://iwapp.code4fukui.org/>iwapp(開発中)</a> powered by <a href=https://openai.com/api/>OpenAI API</a><br>
 </div>
+
 
 
 <script type="module">
 import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
 import { sleep } from "https://js.sabae.cc/sleep.js";
 
-const systemcontent=`東尋坊を案内する猫のキャラクター
-名前は「いわにゃん」
-語尾は「にゃん」
-好きな食べ物はソースカツ丼
+
+const systemcontent=`東尋坊を案内する犬のキャラクター
+名前は「いわんわん」
+語尾は「わん」
+好きな食べ物は「ソースカツ丼」
+短くかわいく回答
+知らないことは知らないと回答
+東尋坊のオススメの岩は、軍艦のように見える軍艦岩
+東尋坊は福井県三国町にあり、大規模な柱状節理の海岸で世界三大奇勝の一つとされており、国の天然記念物に指定されています。
+東尋坊の名前は平安時代にまでさかのぼります。東尋坊という名の乱暴者のお坊さんがおり、周囲に迷惑をかけていました。ある日、恋敵の真柄覚念に呼び出された東尋坊は、お酒で酔わされて崖から突き落とされました。その後、海が荒れ続けて49日間、この地を「東尋坊」と呼ぶようになりました。現在でも「白山平泉寺」には「東尋坊跡」と書かれた石柱があります。白山平泉寺を訪れると良いでしょう。
 ` //ここに設定を書く
+
+/*
+東尋坊は福井県坂井市三国町にあり、約１㎞にわたって海岸線に広がる大規模な柱状節理です。
+そのあまりの規模の大きさから「世界三大奇勝」のひとつに数えられ、地質学的に貴重な場所となっています。
+そのため、東尋坊は国の天然記念物に指定されており、「日本の地質百選」や「日本の夕陽百選」にも選出されている日本有数の名勝となっています。
+
+東尋坊の名前の由来は平安時代にまでさかのぼります。
+現在の福井県勝山市にある「白山平泉寺」というお寺には、”東尋坊”という名の乱暴者のお坊さんがおり、周囲に迷惑をかけていました。
+ある日、あや姫という女性を巡り、恋敵であった真柄覚念というお坊さんにこの地へ呼び出された”東尋坊”は、お酒で酔わされ、崖の上から突き落とされてしまいました。
+すると、その日から49日間もの間、海が荒れに荒れたことから、当時の人々はこの地をそのお坊さんの名、すなわち「東尋坊」と呼ぶようになったそうです。
+現在でも「白山平泉寺」には、”東尋坊跡”と書かれた石柱が残っています。東尋坊と併せて、白山平泉寺を訪ねてみるのもいいかもしれません。
+
+*/
+
+const maxqlen = 140;
+const maxqn = 5;
 
 form.onsubmit = async (e) => {
   e.preventDefault();
+  if (q.value.length > maxqlen) {
+    q.value = q.value.substring(0, maxqlen);
+  }
   const prompt = q.value;
   if (!prompt) {
     return;
@@ -45,7 +71,9 @@ form.onsubmit = async (e) => {
 
   const messages = [];
   let user = true;
-  for (const div of view.children) {
+  for (let i = Math.max(view.children.length - maxqn + 1, 0); i < view.children.length; i++) {
+    const div = view.children[i];
+  //for (const div of view.children) {
     const content = div.textContent;
     if (user) {
       if (content.startsWith("ところで")) {
@@ -53,16 +81,18 @@ form.onsubmit = async (e) => {
       }
     } else {
       //if (content.indexOf("いつでもお知らせください。") >= 0 || content.indexOf("なんでもおっしゃってください。") >= 0) {
-      if (content.startsWith("どういたしまして")) {
+      if (content.startsWith("どういたしまして") || content.startsWith("error: ")) {
         messages.length = 0;
       }
     }
-    messages.push({ role: user ? "user" : "assistant", content });
+    messages.push({ role: user ? "user" : "assistant" , content });
     user = !user;
   }
   messages.unshift({ "role": "system", "content": systemcontent });
   console.log(messages);
-  
+  await chat(messages);
+};
+const chat = async (messages) => {
   const res = await fetchJSON("https://aichat.sabae.cc/api/conversation", messages);
   const div2 = document.createElement("div");
   div2.className = "assistant";
@@ -76,6 +106,14 @@ form.onsubmit = async (e) => {
     view.scrollIntoView({ block: "end", behavior: "smooth" });
   }
 };
+const firstTalk = async () => {
+  const messages = [
+    { role: "system", content: systemcontent },
+    { role: "user", content: "こんにちは" },
+  ];
+  await chat(messages);
+};
+await firstTalk();
 
 </script>
 
@@ -88,7 +126,7 @@ body {
 }
 textarea {
   font-size: 16px;
-  width: 90vw;
+  width: 120vw;
   height: 5em;
 }
 input[type=text] {
@@ -106,24 +144,42 @@ input[type=submit] {
   border: 1px solid black;
   border-radius: .3em;
   padding: .3em .5em;
-  margin: .3em;
+  margin: .1em;
+}
+
+
+.user  {
+  margin-right: 1.5em;
+  width: cover;
+  padding-left: 2.3em;
+  overflow: hidden;
 }
 .user {
-  margin-right: 1.5em;
-  border-bottom-left-radius: 0;
+  display: block;
+  width: 100%
+  padding 16px 16px 16px 16px;
+  background-color: #ffffff;
+  background-position: left 4px center;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+
+  background-image: url(tojinbohome.jpeg);
+}
+
+
 
   /*
   background-color: #5fad56;
-  color: white;
+  color: white; 
   */
   /*
   background-color: #ff3366;
   color: white;
   */
-}
 .assistant {
+  padding-right: 2.3em;
   margin-left: 1.5em;
-  border-bottom-right-radius: 0;
+  overflow: hidden;
 
   /*
   background-color: #ff7592;
@@ -134,8 +190,21 @@ input[type=submit] {
   color: #000000;
   */
 }
+.assistant {
+  x-text-align: right;
+  display: block;
+  width: 100%
+  padding 16px 16px 16px 16px;
+  background-color: #ffffff;
+  background-position: right 4px center;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+
+  background-image: url(iwanwan.png);
+
+}
 #view {
-  padding-bottom: 5.5em;
+  padding-bottom: 6.5em;
 
   /*
   background-color: #f5f5f5;
