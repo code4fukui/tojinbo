@@ -40,8 +40,13 @@
     const comment=data[i].comment
     const gender=data[i].gender
     const id=data[i].id
-  container.innerHTML+=`<div><img src="data:image/png;base64,${img}">
-  <button id="${id}">いいわん</button><div class="nickname">${nickname}</div><div class="comment">${comment}</div><div class="gender">${gender}</div></div>`
+  container.innerHTML+=
+  `<div><img src="data:image/png;base64,${img}">
+    <button id="${id}">いいわん</button>
+    <div class="nickname">${nickname}</div>
+    <div class="comment">${comment}</div>
+    <div class="gender">${gender}</div>
+  </div>`
     document.getElementById(id).onclick=() =>{
       fetchJSON("/api/like", { id});
     }
