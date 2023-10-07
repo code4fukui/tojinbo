@@ -28,10 +28,19 @@
   
   eg.model(glbbase, .7, 0, -3, 0, 10);
  
-  const arrow = eg.model(glbarrow, 10, 1.5, -3, 0, .2);
-  arrow.setAttribute("rotation", { x: 0, y: 0, z: 180 });
-  await eg.waitClick(arrow);
-  open ("gunkaniwa.html", "_blank")
+  const arrow1 = eg.model(glbarrow, 10, 1.5, -3, 0, .2);
+  arrow1.setAttribute("rotation", { x: 0, y: 0, z: 180 });
+  eg.waitClick(arrow1).then(() => {
+    open ("gunkaniwa.html", "_blank")
+  });
+  
+
+  const arrow2 = eg.model(glbarrow, -3.5, 1, -1, 0, .2);
+  arrow2.setAttribute("rotation", { x: 0, y: 0, z: 180 });
+  eg.waitClick(arrow2).then(() => {
+    open ("yuuransen.html", "_blank")
+  });
+  
 </script>
  
 </body>
