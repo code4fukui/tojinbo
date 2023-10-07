@@ -22,7 +22,7 @@ serveAPI("/api/", async (param, req, path) => {
         d.likecount=d.likecount+1;
         console.log(d.likecount)
         rock.write();
-        return "いいね+1"
+        return "いいね+1" 
     }
 
     return "岩投稿東尋坊"
