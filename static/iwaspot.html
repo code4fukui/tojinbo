@@ -47,9 +47,9 @@
     <div class="comment">${comment}</div>
     <div class="gender">${gender}</div>
   </div>`
-    document.getElementById(id).onclick=() =>{
-      fetchJSON("/api/like", { id});
-      console.log(response.text())
+    document.getElementById(id).onclick = async () => {
+      const res = await fetchJSON("/api/like", { id});
+      console.log(res)
     }
   }
 </script>
