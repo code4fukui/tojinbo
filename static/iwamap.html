@@ -9,40 +9,7 @@
     <title>map</title>
 </head>
 <body>
-    <h1 style="text-align: center; color:blue; border-bottom: solid 2px black;">iwamap</h1>
-    <iframe src="https://www.google.com/maps/d/embed?mid=1587VaOBrFNBKyTAWMAA5kr-yjCA6d-A&ehbc=2E312F" width="420" height="450"></iframe>  
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>店名</th>
-            <th>営業時間</th>
-            <th>電話番号</th>
-            <th>写真</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>岩場カフェ</td>
-            <td>10:00~17:00</td>
-            <td>0776-81-7080</td>
-            <td><img src="path/to/image1.jpg" alt="岩場カフェの写真"></td>
-          </tr>
-          <tr>
-            <td>サンプルカフェ</td>
-            <td>10:00〜21:00</td>
-            <td>06-9876-5432</td>
-            <td><img src="path/to/image2.jpg" alt="サンプルカフェの写真"></td>
-          </tr>
-          <tr>
-            <td>サンプルレストラン</td>
-            <td>11:30〜14:00, 17:00〜22:00</td>
-            <td>075-111-2222</td>
-            <td><img src="path/to/image3.jpg" alt="サンプルレストランの写真"></td>
-          </tr>
-        </tbody>
-      </table>
-        <nav>  
+     <nav>  
          <ul>
            <li><a href="index.html"  id="homelink" class="active"><i class="fas fa-home" aria-hidden="true"></i></a></li>
            <li><a href="iwaspot.html" id="iwaspotlink" class="active"><i class="fas fa-camera" aria-hidden="true"></i></a></li>
@@ -52,5 +19,20 @@
          </ul>
        </nav> 
       </div> 
+
+<script type="module">
+  import * as eg from "https://js.sabae.cc/egvr.js";
+  
+  const glbbase = "https://code4fukui.github.io/vr-tojinbo/tojinbo-south.glb?";
+  const glbarrow = "https://code4fukui.github.io/vr-dinosaur-museum/arrow.glb";
+  
+  eg.model(glbbase, .7, 0, -3, 0, 10);
+ 
+  const arrow = eg.model(glbarrow, 10, 1.5, -3, 0, .2);
+  arrow.setAttribute("rotation", { x: 0, y: 0, z: 180 });
+  await eg.waitClick(arrow);
+  open("gunkaniwa.html", "_blank")
+</script>
+ 
 </body>
 </html>
