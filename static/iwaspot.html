@@ -49,6 +49,7 @@
   </div>`
     document.getElementById(id).onclick=() =>{
       fetchJSON("/api/like", { id});
+      console.log(response.text())
     }
   }
 </script>
