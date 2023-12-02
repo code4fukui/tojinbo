@@ -9,7 +9,7 @@
     <title>map</title>
 </head>
 <body>
-     <nav>  
+     <nav style="z-index: 10;">  
          <ul>
            <li><a href="index.html"  id="homelink" class="active"><i class="fas fa-home" aria-hidden="true"></i></a></li>
            <li><a href="iwaspot.html" id="iwaspotlink" class="active"><i class="fas fa-camera" aria-hidden="true"></i></a></li>
@@ -19,7 +19,17 @@
          </ul>
        </nav> 
       </div> 
-
+      <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+        <a-camera>
+          <a-cursor></a-cursor>
+        </a-camera>
+  
+        <!-- 例: クリック可能なオブジェクト -->
+        <a-box position="0 1.25 -5" rotation="0 45 0" color="#4CC3D9" class="clickable"></a-box>
+        
+        <!-- 他のA-Frameエンティティ ... -->
+  
+      </a-scene>
 <script type="module">
   import * as eg from "https://js.sabae.cc/egvr.js";
   
