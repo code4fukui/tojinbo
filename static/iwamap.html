@@ -9,7 +9,7 @@
     <title>map</title>
 </head>
 <body>
-     <nav style="z-index: 10;">  
+     <nav style="z-index:-1;">  
          <ul>
            <li><a href="index.html"  id="homelink" class="active"><i class="fas fa-home" aria-hidden="true"></i></a></li>
            <li><a href="iwaspot.html" id="iwaspotlink" class="active"><i class="fas fa-camera" aria-hidden="true"></i></a></li>
@@ -19,25 +19,27 @@
          </ul>
        </nav> 
       </div> 
-      <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
-        <a-camera>
-          <a-cursor></a-cursor>
-        </a-camera>
-  
-        <!-- 例: クリック可能なオブジェクト -->
-        <a-box position="0 1.25 -5" rotation="0 45 0" color="#4CC3D9" class="clickable"></a-box>
-        
-        <!-- 他のA-Frameエンティティ ... -->
-  
-      </a-scene>
+    
+      <!-- UIボタン -->
+      <div id="ui-buttons" style="position: fixed; bottom: 10px; width:100%; text-align:center; z-index: 100;">
+        <button id="btn_forward">前へ</button>
+        <button id="btn_backward">後へ</button>
+        <button id="btn_left">左へ</button>
+        <button id="btn_right">右へ</button>
+        <button id="btn_up">上へ</button>
+        <button id="btn_down">下へ</button>
+      </div>
+    
+      <script>
+      </script>
 <script type="module">
   import * as eg from "https://js.sabae.cc/egvr.js";
   
   const glbbase = "https://code4fukui.github.io/vr-tojinbo/tojinbo-south.glb?";
   const glbarrow = "https://code4fukui.github.io/vr-dinosaur-museum/arrow.glb";
   
-  eg.model(glbbase, .7, 0, -3, 0, 10);
- 
+  const m = eg.model(glbbase, .7, 0, -3, 0, 10);
+
   const arrow1 = eg.model(glbarrow, 10, 1.5, -3, 0, .2);
   arrow1.setAttribute("rotation", { x: 0, y: 0, z: 180 });
   eg.waitClick(arrow1).then(() => {
@@ -51,6 +53,30 @@
     open ("yuuransen.html", "_blank")
   });
   
+
+  function move(direction) {
+          var position = m.getAttribute('position');
+          var moveSpeed = 5; // この値によって移動速度を調節
+    
+          switch (direction) {
+            case 'forward': position.z += moveSpeed; break;
+            case 'backward': position.z -= moveSpeed; break;
+            case 'left': position.x += moveSpeed; break;
+            case 'right': position.x -= moveSpeed; break;
+            case 'up': position.y -= moveSpeed; break;
+            case 'down': position.y += moveSpeed; break;
+            default: break;
+          }
+          
+          m.setAttribute('position', position);
+        }
+
+        btn_forward.onclick = () => move("forward");
+        btn_backward.onclick = () => move("backward");
+        btn_left.onclick = () => move("left");
+        btn_right.onclick = () => move("right");
+        btn_up.onclick = () => move("up");
+        btn_down.onclick = () => move("down");
 </script>
  
 </body>
