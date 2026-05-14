@@ -1,97 +1,145 @@
 # tojinbo
 
-- [iwapp(開発中)](https://iwapp.code4fukui.org/)
+> 日本語のREADMEはこちらです: [README.ja.md](README.ja.md)
 
-## memorize sever
+A web application for sharing and exploring the unique rock formations at Tojinbo, Fukui. The app features user-submitted photos, an interactive VR map, an AI chatbot, and gamification elements.
 
-```protocol
-岩データの保存
-    /api/save
-    param:岩データ
-岩データの閲覧
-    検索キーワードq
-    新着10latest
-    おすすめ（閲覧数）famous
-岩データとは
-    東尋坊の岩の写真image
-    名前name
-```
+- **Live Demo:** [iwapp (開発中)](https://iwapp.code4fukui.org/)
 
-## サーバーをローカルで動かす
+## Features
 
-```sh
+-   **Rock Spotting**: Users can upload photos of interesting rock formations, giving them a nickname and a description of what they look like (e.g., "a heart," "a dog").
+-   **"Ii-wan!" Like System**: Visitors can vote for their favorite rock photos with an "いいわん!" (a pun on "good rock" and a dog's bark) button.
+-   **Interactive VR Map**: Explore a 3D model of the Tojinbo cliffs. The map includes clickable arrows to navigate to points of interest.
+-   **AI Chatbot "Iwanwan"**: Ask "いわんわん", the Tojinbo guide dog, questions about the area. The chatbot provides helpful, "wan"-ending answers about Tojinbo's history and attractions.
+-   **Iwacoin Gamification**: Earn virtual "iwacoin" by participating in activities like posting rock photos or joining cleanup events. Coins can be exchanged for rewards.
+-   **Events & Activities**: The homepage features an event list and links to activities, including a video of a "Tojinbo VR Jet Coaster".
+
+## Getting Started
+
+### Prerequisites
+
+-   [Deno](https://deno.land/) runtime
+
+### Local Development
+
+To run the server on your local machine:
+
+```bash
 deno run -A server.js
 ```
 
-## サーバー接続
+The application will be available at `http://localhost:8000`.
 
-### 初回
+## Server Management & Deployment
 
-#### 公開鍵、秘密鍵をまだ生成していない場合は生成する(Macの場合)
+These instructions cover deploying and managing the application on a remote server.
 
-```sh
-mkdir ~/.ssh
+### 1. Initial SSH Setup (First Time Only)
+
+If you haven't already, generate an SSH key pair on your local machine.
+
+```bash
+# Create .ssh directory if it doesn't exist
+mkdir -p ~/.ssh
+
+# Generate a new ed25519 key pair
 ssh-keygen -t ed25519
+
+# Display your public key to copy it
 cat ~/.ssh/id_ed25519.pub
-ls ~/.ssh/id_ed25519
 ```
-(公開鍵: ~/.ssh/id_ed25519.pub、秘密鍵: ~/.ssh/id_ed25519)
 
-#### サーバーにて設定
+On the server, add your public key to the `authorized_keys` file.
 
-```sh
-cd /home/iwapp
-mkdir ~/.ssh
+```bash
+# Run these commands on the server as the 'iwapp' user
+mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 touch ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
-# 公開鍵を書き込む
-echo "ssh-ed25519 ?? ??@??" >> ~/.ssh/authorized_keys
+
+# Paste your public key from the previous step and append it
+echo "ssh-ed25519 AAAA..." >> ~/.ssh/authorized_keys
 ```
 
-### ログイン
+### 2. Connecting and Deploying Updates
 
-```sh
+Connect to the server via SSH and navigate to the project directory.
+
+```bash
 ssh -i ~/.ssh/id_ed25519 iwapp@iwapp.code4fukui.org
 cd tojinbo
 ```
 
-### サーバープログラム更新（GitHubから取得する）
+Pull the latest changes from the GitHub repository.
 
-```sh
+```bash
 git pull
 ```
 
-### プロセス確認
+### 3. Managing the Application Process
 
-```sh
+**Check Running Processes**
+
+To see if the server is already running, use `ps`.
+
+```bash
 ps -fu iwapp
 ```
+*Example Output:*
 ```
 UID          PID    PPID  C STIME TTY          TIME CMD
 iwapp     668120       1  0 Jun17 ?        00:00:00 deno run -A server.js 8009
 ```
 
-プロセス停止方法
-CMDが deno run -A server.js 8009 となっている、行のPID 668120 を使って
-```sh
+**Stop the Process**
+
+Use the `kill` command with the Process ID (PID) from the `ps` output.
+
+```bash
+# Using the example PID from above
 kill 668120
 ```
-で、停止する
 
-```sh
-ps -fu iwapp
-```
-で確認できる
+**Start the Process**
 
-### 自動起動方法 server.js を書き換えると自動的に再起動する
+To run the server in the background, use `nohup` and `&`.
 
-```sh
+```bash
+# Standard start
+nohup deno run -A server.js 8009 &
+
+# Start with auto-restart on file changes (for development)
 nohup deno run -A --watch server.js 8009 &
 ```
 
-### 通常起動
+## API Endpoints
 
-```sh
-nohup deno run -A server.js 8009 &
-```
+The server provides a simple JSON-based API for managing rock data.
+
+-   **`POST /api/save`**
+    -   Saves a new rock photo submission. The server automatically adds a unique `id` and initializes `likecount` to 0.
+    -   **Request Body:**
+        ```json
+        {
+          "img": "data:image/jpeg;base64,...",
+          "nickname": "string",
+          "comment": "string",
+          "genderm": boolean,
+          "genderf": boolean
+        }
+        ```
+
+-   **`GET /api/watch`**
+    -   Retrieves an array of all saved rock data objects.
+
+-   **`POST /api/like`**
+    -   Increments the `likecount` for a specific rock submission.
+    -   **Request Body:**
+        ```json
+        {
+          "id": "unique-rock-id-string"
+        }
+        ```
+    -   **Returns:** The new `likecount` as a number.
